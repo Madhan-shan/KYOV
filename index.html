@@ -141,6 +141,7 @@
   <strong>✏️ Edit mode</strong>
   <span>Click any step text to edit &bull; Rename applications &bull; Add/remove steps &bull; Upload screenshots</span>
   <button class="banner-btn primary" onclick="exportHTML()">⬇ Save &amp; Download HTML</button>
+  <button class="banner-btn" onclick="clearData()">🗑 Reset all</button>
   <button class="banner-btn" onclick="document.getElementById('edit-banner').style.display='none'">Hide</button>
 </div>
 
@@ -180,13 +181,28 @@
 
 <script>
 const COLORS = ['#4f46e5','#0891b2','#059669','#d97706','#dc2626','#7c3aed','#db2777','#0f766e'];
+const STORAGE_KEY = 'training_guide_v1';
 
-let apps = [
-  { id: uid(), name: 'Orchestra', steps: [{ id: uid(), text: '', images: [] }, { id: uid(), text: '', images: [] }, { id: uid(), text: '', images: [] }] },
+function uid() { return '_' + Math.random().toString(36).slice(2, 9); }
+
+const DEFAULT_APPS = [
+  { id: uid(), name: 'Orchestra', steps: [{ id: uid(), text: 'Check the mail notification from Orchestra — that\'s the very first step to initiate any new request we receive from client.', images: [] }, { id: uid(), text: '', images: [] }, { id: uid(), text: '', images: [] }] },
   { id: uid(), name: 'KYOV',      steps: [{ id: uid(), text: '', images: [] }, { id: uid(), text: '', images: [] }, { id: uid(), text: '', images: [] }] }
 ];
 
-function uid() { return '_' + Math.random().toString(36).slice(2, 9); }
+function loadApps() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return DEFAULT_APPS;
+}
+
+function saveApps() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(apps)); } catch(e) {}
+}
+
+let apps = loadApps();
 function color(i) { return COLORS[i % COLORS.length]; }
 function initials(n) { return (n || '?').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase() || '?'; }
 function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -282,13 +298,14 @@ function onAppName(appId, val) {
   const ic = document.getElementById('ic-'+appId);
   if (ic) ic.textContent = initials(val);
   renderNav();
+  saveApps();
 }
 
 function saveText(appId, stepId, el) {
   const app = apps.find(a => a.id === appId);
   if (!app) return;
   const step = app.steps.find(s => s.id === stepId);
-  if (step) step.text = el.innerText.trim();
+  if (step) { step.text = el.innerText.trim(); saveApps(); }
 }
 
 function syncAllText() {
@@ -313,6 +330,7 @@ function refreshSteps(appId) {
 
 function addApp() {
   apps.push({ id: uid(), name: '', steps: [{ id: uid(), text: '', images: [] }] });
+  saveApps();
   render();
   setTimeout(() => {
     const secs = document.querySelectorAll('.app-section');
@@ -324,6 +342,7 @@ function removeApp(appId) {
   if (apps.length === 1) { showToast('⚠️ Keep at least one application'); return; }
   if (!confirm('Remove this application and all its steps?')) return;
   apps = apps.filter(a => a.id !== appId);
+  saveApps();
   render();
 }
 
@@ -333,6 +352,7 @@ function addStep(appId) {
   if (!app) return;
   const newStep = { id: uid(), text: '', images: [] };
   app.steps.push(newStep);
+  saveApps();
   refreshSteps(appId);
   setTimeout(() => {
     const el = document.getElementById(newStep.id);
@@ -346,6 +366,7 @@ function removeStep(appId, stepId) {
   if (app.steps.length === 1) { showToast('⚠️ Keep at least one step'); return; }
   syncAllText();
   app.steps = app.steps.filter(s => s.id !== stepId);
+  saveApps();
   refreshSteps(appId);
 }
 
@@ -360,7 +381,7 @@ function handleUpload(e, appId, stepId) {
     const r = new FileReader();
     r.onload = ev => {
       step.images.push({ data: ev.target.result, name: f.name });
-      if (++done === files.length) refreshSteps(appId);
+      if (++done === files.length) { saveApps(); refreshSteps(appId); }
     };
     r.readAsDataURL(f);
   });
@@ -372,6 +393,7 @@ function removeImg(appId, stepId, idx) {
   const step = app && app.steps.find(s => s.id === stepId);
   if (!step) return;
   step.images.splice(idx, 1);
+  saveApps();
   refreshSteps(appId);
 }
 
@@ -530,6 +552,12 @@ document.querySelectorAll('.steps-wrap').forEach(el=>o2.observe(el));
   a.download = 'index.html';
   a.click();
   showToast('✅ index.html downloaded — upload to GitHub to update your page!');
+}
+
+function clearData() {
+  if (!confirm('Reset everything and start fresh? This cannot be undone.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
 }
 
 /* ── Scroll observers ── */

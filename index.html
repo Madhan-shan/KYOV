@@ -6,630 +6,550 @@
 <title>Business Process Training Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
 <style>
-  /* ─── Reset & Base ─── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg:       #f0f2f8;
-    --surface:  #ffffff;
-    --surface2: #f7f8fb;
-    --text:     #12131a;
-    --muted:    #6b7280;
-    --border:   #e4e6ef;
-    --app1:     #4f46e5;
-    --app2:     #0891b2;
-    --app3:     #059669;
-    --app4:     #d97706;
-    --app5:     #dc2626;
-    --app6:     #7c3aed;
-  }
+  :root { --bg:#f0f2f8; --surface:#fff; --surface2:#f7f8fb; --text:#12131a; --muted:#6b7280; --border:#e4e6ef; }
   html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-  /* ─── Header ─── */
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 200;
-    padding: 0 2rem;
-  }
-  .header-inner {
-    max-width: 1000px;
-    margin: 0 auto;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .logo {
-    font-family: 'Sora', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-  }
-  .logo-dot {
-    width: 10px; height: 10px;
-    background: var(--app1);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
-  .nav {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-left: auto;
-    align-items: center;
-  }
-  .nav a {
-    font-size: 12px;
-    font-weight: 500;
-    padding: 5px 14px;
-    border-radius: 20px;
-    text-decoration: none;
-    border: 1.5px solid;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .nav a:hover { color: #fff; }
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg,#4f46e5,#0891b2); width: 0%; z-index: 300; transition: width .1s; }
 
-  /* ─── Hero ─── */
-  .hero {
-    text-align: center;
-    padding: 4rem 1.5rem 3rem;
-    max-width: 700px;
-    margin: 0 auto;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.7s 0.1s forwards;
-  }
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    margin-bottom: 1.25rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .hero h1 {
-    font-family: 'Sora', sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 0.75rem;
-    color: var(--text);
-  }
-  .hero p {
-    font-size: 1rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
+  /* Edit banner */
+  .edit-banner { background: #1e1b4b; color: #c7d2fe; font-size: 13px; text-align: center; padding: 9px 1rem; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .edit-banner strong { color: #fff; }
+  .banner-btn { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #fff; border-radius: 6px; padding: 4px 14px; font-size: 12px; font-family: 'Inter',sans-serif; cursor: pointer; transition: background .2s; }
+  .banner-btn:hover { background: rgba(255,255,255,.22); }
+  .banner-btn.primary { background: #4f46e5; border-color: #4f46e5; }
+  .banner-btn.primary:hover { background: #4338ca; }
 
-  /* ─── Progress bar ─── */
-  .progress-bar {
-    position: fixed;
-    top: 60px; left: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--app1), var(--app2));
-    width: 0%;
-    transition: width 0.1s;
-    z-index: 199;
-  }
+  /* Header */
+  header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 200; padding: 0 2rem; }
+  .header-inner { max-width: 1000px; margin: 0 auto; height: 60px; display: flex; align-items: center; gap: 1rem; }
+  .logo { font-family: 'Sora',sans-serif; font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .logo-dot { width: 10px; height: 10px; background: #4f46e5; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+  .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; align-items: center; }
+  .nav a { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 20px; text-decoration: none; border: 1.5px solid; transition: all .2s; white-space: nowrap; }
+  .nav a:hover { color: #fff !important; }
 
-  /* ─── Main layout ─── */
-  main {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1.5rem 4rem;
-  }
+  /* Hero */
+  .hero { text-align: center; padding: 3.5rem 1.5rem 2.5rem; max-width: 700px; margin: 0 auto; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 1.25rem; letter-spacing: .04em; text-transform: uppercase; }
+  .hero h1 { font-family: 'Sora',sans-serif; font-size: clamp(1.8rem,4vw,2.4rem); font-weight: 700; line-height: 1.2; margin-bottom: .75rem; }
+  .hero p { font-size: 1rem; color: var(--muted); line-height: 1.7; }
 
-  /* ─── App section ─── */
-  .app-section {
-    margin-bottom: 3rem;
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
+  /* Main */
+  main { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+  /* App section */
+  .app-section { margin-bottom: 3rem; opacity: 0; transform: translateY(28px); transition: opacity .6s, transform .6s; }
   .app-section.visible { opacity: 1; transform: none; }
 
-  .app-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 1.25rem 1.75rem;
-    border-radius: 16px 16px 0 0;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-  }
-  .app-header::after {
-    content: '';
-    position: absolute;
-    right: -20px; top: -20px;
-    width: 120px; height: 120px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-  }
-  .app-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.2);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Sora', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .app-title { font-family: 'Sora', sans-serif; font-size: 1.2rem; font-weight: 700; flex: 1; }
-  .app-meta { font-size: 12px; background: rgba(255,255,255,0.2); border-radius: 12px; padding: 3px 12px; }
+  .app-header { display: flex; align-items: center; gap: 12px; padding: 1.1rem 1.5rem; border-radius: 16px 16px 0 0; color: #fff; position: relative; overflow: hidden; }
+  .app-header::after { content: ''; position: absolute; right: -20px; top: -20px; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,.07); pointer-events: none; }
+  .app-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-family: 'Sora',sans-serif; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .app-title-input { flex: 1; font-family: 'Sora',sans-serif; font-size: 1.15rem; font-weight: 700; background: transparent; border: none; color: #fff; outline: none; border-bottom: 1.5px solid transparent; padding: 2px 0; transition: border-color .2s; min-width: 0; }
+  .app-title-input:focus { border-bottom-color: rgba(255,255,255,.5); }
+  .app-title-input::placeholder { color: rgba(255,255,255,.45); }
+  .app-meta { font-size: 12px; background: rgba(255,255,255,.18); border-radius: 12px; padding: 3px 12px; white-space: nowrap; }
+  .app-action-btn { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); color: #fff; border-radius: 6px; padding: 5px 11px; font-size: 11px; cursor: pointer; font-family: 'Inter',sans-serif; transition: background .2s; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .app-action-btn:hover { background: rgba(255,255,255,.28); }
+  .app-action-btn.danger:hover { background: rgba(220,38,38,.55); border-color: rgba(220,38,38,.6); }
 
-  /* ─── Steps container ─── */
-  .steps-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-top: none;
-    border-radius: 0 0 16px 16px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
+  /* Steps */
+  .steps-wrap { background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 16px 16px; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1px; }
 
-  /* ─── Step card ─── */
-  .step-card {
-    display: flex;
-    gap: 16px;
-    padding: 1.1rem 1rem;
-    border-radius: 12px;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: opacity 0.5s ease, transform 0.5s ease, background 0.2s;
-    position: relative;
-  }
+  .step-card { display: flex; gap: 14px; padding: 1rem; border-radius: 12px; opacity: 0; transform: translateX(-18px); transition: opacity .5s, transform .5s, background .2s; position: relative; }
   .step-card.visible { opacity: 1; transform: none; }
   .step-card:hover { background: var(--surface2); }
-  .step-card:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 48px; right: 0;
-    height: 1px;
-    background: var(--border);
-  }
+  .step-card:not(:last-child)::after { content: ''; position: absolute; bottom: 0; left: 46px; right: 0; height: 1px; background: var(--border); }
 
-  .step-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-    width: 32px;
-  }
-  .step-num {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
-    color: #fff;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-  }
-  .step-line {
-    flex: 1;
-    width: 2px;
-    background: var(--border);
-    border-radius: 2px;
-    min-height: 16px;
-  }
+  .step-left { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; width: 32px; }
+  .step-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .step-line { flex: 1; width: 2px; background: var(--border); border-radius: 2px; min-height: 16px; }
 
-  .step-body { flex: 1; min-width: 0; padding-top: 4px; }
-  .step-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
+  .step-body { flex: 1; min-width: 0; padding-top: 3px; }
+  .step-label { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 5px; }
+
+  /* Editable text */
   .step-text {
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--text);
+    font-size: 14px; line-height: 1.7; color: var(--text);
+    border: 1.5px solid transparent; border-radius: 8px;
+    padding: 6px 8px; outline: none; min-height: 38px;
+    width: 100%; transition: border-color .2s, background .2s;
+    cursor: text; word-break: break-word;
   }
-  /* placeholder text styling */
-  .step-text.placeholder { color: var(--muted); font-style: italic; }
+  .step-text:empty::before { content: attr(data-placeholder); color: var(--muted); font-style: italic; pointer-events: none; }
+  .step-text:hover { border-color: var(--border); background: var(--surface); }
+  .step-text:focus { border-color: #a5b4fc; background: #fafafe; box-shadow: 0 0 0 3px rgba(99,102,241,.08); }
 
-  /* ─── Screenshots ─── */
-  .screenshots {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-  }
-  .screenshot-wrap {
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .screenshot-wrap:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
-  .screenshot-wrap img {
-    display: block;
-    max-width: 240px;
-    max-height: 160px;
-    object-fit: cover;
-  }
-  /* placeholder screenshot slot */
-  .screenshot-placeholder {
-    width: 200px; height: 120px;
-    border: 2px dashed var(--border);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 12px;
-    background: var(--surface2);
-  }
-  .screenshot-placeholder svg { opacity: 0.4; }
+  /* Step delete btn */
+  .step-actions { display: flex; gap: 5px; align-items: flex-start; padding-top: 4px; flex-shrink: 0; }
+  .step-btn { background: none; border: none; cursor: pointer; color: var(--muted); width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: background .15s, color .15s; }
+  .step-btn.delete:hover { background: #fee2e2; color: #dc2626; }
 
-  /* ─── Lightbox ─── */
-  .lightbox {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.88);
-    z-index: 999;
-    align-items: center;
-    justify-content: center;
-    cursor: zoom-out;
-  }
+  /* Screenshots */
+  .screenshots { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; align-items: flex-start; }
+  .screenshot-wrap { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); cursor: zoom-in; transition: transform .2s, box-shadow .2s; display: inline-block; position: relative; flex-shrink: 0; }
+  .screenshot-wrap:hover { transform: scale(1.03); box-shadow: 0 4px 20px rgba(0,0,0,.13); }
+  .screenshot-wrap:hover .zoom-hint { opacity: 1; }
+  .zoom-hint { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,.55); color: #fff; font-size: 10px; text-align: center; padding: 4px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .screenshot-wrap img { display: block; max-width: 260px; max-height: 170px; object-fit: cover; pointer-events: none; }
+  .remove-img-btn { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; background: rgba(0,0,0,.65); color: #fff; border: none; border-radius: 50%; font-size: 13px; cursor: pointer; display: none; align-items: center; justify-content: center; line-height: 1; }
+  .screenshot-wrap:hover .remove-img-btn { display: flex; }
+
+  .upload-label { display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--border); border-radius: 8px; padding: 7px 13px; font-size: 12px; color: var(--muted); cursor: pointer; transition: all .2s; white-space: nowrap; margin-top: 10px; }
+  .upload-label:hover { border-color: #4f46e5; color: #4f46e5; background: #eef2ff; }
+  .upload-label input { display: none; }
+
+  .screenshot-placeholder { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 180px; height: 100px; border: 2px dashed var(--border); border-radius: 8px; background: var(--surface2); color: var(--muted); font-size: 11px; margin-top: 10px; }
+  .screenshot-placeholder svg { opacity: .35; }
+
+  /* Add step btn */
+  .add-step-btn { display: flex; align-items: center; gap: 7px; background: none; border: 1.5px dashed var(--border); border-radius: 10px; padding: .6rem 1rem; font-size: 13px; color: var(--muted); cursor: pointer; width: 100%; margin-top: .75rem; font-family: 'Inter',sans-serif; transition: all .2s; }
+  .add-step-btn:hover { border-color: #4f46e5; color: #4f46e5; background: #f5f3ff; }
+
+  /* Add app btn */
+  .add-app-wrap { text-align: center; margin-bottom: 2rem; }
+  .add-app-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1.5px dashed var(--border); border-radius: 12px; padding: .75rem 1.75rem; font-size: 14px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all .2s; font-family: 'Inter',sans-serif; }
+  .add-app-btn:hover { border-color: #4f46e5; color: #4f46e5; background: #eef2ff; }
+
+  /* Lightbox */
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.9); z-index: 999; align-items: center; justify-content: center; cursor: zoom-out; }
   .lightbox.open { display: flex; }
-  .lightbox img {
-    max-width: 92vw;
-    max-height: 92vh;
-    border-radius: 10px;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
-    animation: zoomIn 0.2s ease;
-  }
-  @keyframes zoomIn { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
-  .lightbox-close {
-    position: fixed; top: 1.25rem; right: 1.5rem;
-    color: rgba(255,255,255,0.7);
-    font-size: 2rem;
-    cursor: pointer;
-    background: none; border: none;
-    line-height: 1;
-    transition: color 0.2s;
-  }
+  .lightbox img { max-width: 92vw; max-height: 90vh; border-radius: 10px; animation: zoomIn .2s ease; }
+  @keyframes zoomIn { from{transform:scale(.9);opacity:0} to{transform:scale(1);opacity:1} }
+  .lightbox-close { position: fixed; top: 1.25rem; right: 1.5rem; color: rgba(255,255,255,.7); font-size: 2rem; cursor: pointer; background: none; border: none; line-height: 1; }
   .lightbox-close:hover { color: #fff; }
-  .lightbox-caption {
-    position: fixed; bottom: 1.5rem; left: 50%;
-    transform: translateX(-50%);
-    color: rgba(255,255,255,0.6);
-    font-size: 13px;
-    background: rgba(0,0,0,0.5);
-    padding: 5px 16px;
-    border-radius: 20px;
-  }
 
-  /* ─── Footer ─── */
-  footer {
-    text-align: center;
-    padding: 2rem 1.5rem;
-    color: var(--muted);
-    font-size: 13px;
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-  }
+  /* Toast */
+  .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(60px); background: #1e1b4b; color: #fff; padding: 10px 20px; border-radius: 10px; font-size: 13px; z-index: 999; opacity: 0; transition: all .3s; white-space: nowrap; }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-  /* ─── Animations ─── */
-  @keyframes fadeUp {
-    to { opacity: 1; transform: none; }
-  }
+  footer { text-align: center; padding: 2rem 1.5rem; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); background: var(--surface); }
 
-  /* ─── Responsive ─── */
-  @media (max-width: 600px) {
-    .header-inner { padding: 0; }
-    header { padding: 0 1rem; }
-    main { padding: 0 1rem 3rem; }
-    .app-header { padding: 1rem; }
-    .steps-wrap { padding: 1rem; }
-    .hero { padding: 2.5rem 1rem 2rem; }
-    .nav a { font-size: 11px; padding: 4px 10px; }
+  @media (max-width: 640px) {
+    header { padding: 0 1rem; } main { padding: 0 1rem 3rem; }
+    .hero { padding: 2rem 1rem; } .app-header { padding: .9rem 1rem; flex-wrap: wrap; } .steps-wrap { padding: 1rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- ═══ PROGRESS BAR ═══ -->
 <div class="progress-bar" id="progress"></div>
 
-<!-- ═══ HEADER ═══ -->
+<div class="edit-banner" id="edit-banner">
+  <strong>✏️ Edit mode</strong>
+  <span>Click any step text to edit &bull; Rename applications &bull; Add/remove steps &bull; Upload screenshots</span>
+  <button class="banner-btn primary" onclick="exportHTML()">⬇ Save &amp; Download HTML</button>
+  <button class="banner-btn" onclick="document.getElementById('edit-banner').style.display='none'">Hide</button>
+</div>
+
 <header>
   <div class="header-inner">
-    <div class="logo">
-      <div class="logo-dot"></div>
-      Process Training
-    </div>
-    <nav class="nav" aria-label="Jump to application">
-      <!-- ── ADD/REMOVE NAV LINKS HERE AS YOU ADD MORE APPS ── -->
-      <a href="#app-1" style="color:var(--app1);border-color:var(--app1)">Orchestra</a>
-      <a href="#app-2" style="color:var(--app2);border-color:var(--app2)">KYOV</a>
-      <!-- <a href="#app-3" style="color:var(--app3);border-color:var(--app3)">App 3</a> -->
-    </nav>
+    <div class="logo"><div class="logo-dot"></div>Process Training</div>
+    <nav class="nav" id="nav-bar" aria-label="Applications"></nav>
   </div>
 </header>
 
-<!-- ═══ HERO ═══ -->
 <div class="hero">
   <div class="hero-badge">
-    <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="var(--app1)"/></svg>
+    <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#4f46e5"/></svg>
     Business Process Training
   </div>
   <h1>Step-by-step application guides</h1>
-  <p>Follow each application's process steps in order. Click any screenshot to expand it.</p>
+  <p>Click any step to edit it. Upload screenshots per step. Hit "Save &amp; Download" when done.</p>
 </div>
 
-<!-- ═══ MAIN CONTENT ═══ -->
-<main>
+<main id="main-content"></main>
 
-  <!-- ════════════════════════════════════════════
-       APP 1: ORCHESTRA
-       To edit: update the steps below.
-       To add a screenshot: put image files in a
-       "screenshots" folder next to this file, then
-       replace the placeholder div with:
-         <div class="screenshot-wrap">
-           <img src="screenshots/YOUR-FILE.png" alt="Step description" onclick="openImg(this,'Caption text')" />
-         </div>
-  ════════════════════════════════════════════ -->
-  <section class="app-section" id="app-1">
-    <div class="app-header" style="background:var(--app1)">
-      <div class="app-icon">OR</div>
-      <div class="app-title">Orchestra</div>
-      <div class="app-meta">X steps</div>  <!-- update X with actual count -->
-    </div>
-    <div class="steps-wrap">
+<div class="add-app-wrap" style="max-width:1000px;margin:0 auto 3rem;padding:0 1.5rem">
+  <button class="add-app-btn" onclick="addApp()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+    Add application
+  </button>
+</div>
 
-      <!-- STEP 1 -->
-      <div class="step-card">
-        <div class="step-left">
-          <div class="step-num" style="background:var(--app1)">1</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-body">
-          <div class="step-label" style="color:var(--app1)">Step 1</div>
-          <div class="step-text">
-            <!-- ✏️ REPLACE THIS TEXT with your step description -->
-            Describe what the trainee should do in step 1 here.
-          </div>
-          <!-- 🖼️ SCREENSHOT: replace placeholder below with actual image tag when ready -->
-          <div class="screenshot-placeholder">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            Screenshot coming soon
-          </div>
-        </div>
-      </div>
+<footer>Business Process Training Guide &mdash; all screenshots are embedded in the exported file</footer>
 
-      <!-- STEP 2 -->
-      <div class="step-card">
-        <div class="step-left">
-          <div class="step-num" style="background:var(--app1)">2</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-body">
-          <div class="step-label" style="color:var(--app1)">Step 2</div>
-          <div class="step-text">
-            Describe what the trainee should do in step 2 here.
-          </div>
-          <div class="screenshot-placeholder">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            Screenshot coming soon
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 3 -->
-      <div class="step-card">
-        <div class="step-left">
-          <div class="step-num" style="background:var(--app1)">3</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-body">
-          <div class="step-label" style="color:var(--app1)">Step 3</div>
-          <div class="step-text">
-            Describe what the trainee should do in step 3 here.
-          </div>
-          <div class="screenshot-placeholder">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            Screenshot coming soon
-          </div>
-        </div>
-      </div>
-
-      <!-- ➕ COPY A STEP BLOCK ABOVE TO ADD MORE STEPS -->
-
-    </div>
-  </section>
-
-
-  <!-- ════════════════════════════════════════════
-       APP 2: KYOV
-       Same structure as above — edit steps below.
-  ════════════════════════════════════════════ -->
-  <section class="app-section" id="app-2">
-    <div class="app-header" style="background:var(--app2)">
-      <div class="app-icon">KY</div>
-      <div class="app-title">KYOV</div>
-      <div class="app-meta">X steps</div>
-    </div>
-    <div class="steps-wrap">
-
-      <!-- STEP 1 -->
-      <div class="step-card">
-        <div class="step-left">
-          <div class="step-num" style="background:var(--app2)">1</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-body">
-          <div class="step-label" style="color:var(--app2)">Step 1</div>
-          <div class="step-text">
-            Describe what the trainee should do in step 1 here.
-          </div>
-          <div class="screenshot-placeholder">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            Screenshot coming soon
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 2 -->
-      <div class="step-card">
-        <div class="step-left">
-          <div class="step-num" style="background:var(--app2)">2</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-body">
-          <div class="step-label" style="color:var(--app2)">Step 2</div>
-          <div class="step-text">
-            Describe what the trainee should do in step 2 here.
-          </div>
-          <div class="screenshot-placeholder">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            Screenshot coming soon
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 3 -->
-      <div class="step-card">
-        <div class="step-left">
-          <div class="step-num" style="background:var(--app2)">3</div>
-        </div>
-        <div class="step-body">
-          <div class="step-label" style="color:var(--app2)">Step 3</div>
-          <div class="step-text">
-            Describe what the trainee should do in step 3 here.
-          </div>
-          <div class="screenshot-placeholder">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            Screenshot coming soon
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- ════════════════════════════════════════════
-       ➕ ADD MORE APPLICATIONS
-       Copy the block below, paste after app-2,
-       change id="app-3", color to var(--app3),
-       update initials, name, and steps.
-  ════════════════════════════════════════════
-
-  <section class="app-section" id="app-3">
-    <div class="app-header" style="background:var(--app3)">
-      <div class="app-icon">A3</div>
-      <div class="app-title">App Name</div>
-      <div class="app-meta">X steps</div>
-    </div>
-    <div class="steps-wrap">
-      <div class="step-card">
-        <div class="step-left">
-          <div class="step-num" style="background:var(--app3)">1</div>
-        </div>
-        <div class="step-body">
-          <div class="step-label" style="color:var(--app3)">Step 1</div>
-          <div class="step-text">Step description here.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-  -->
-
-</main>
-
-<!-- ═══ FOOTER ═══ -->
-<footer>
-  Business Process Training Guide &nbsp;·&nbsp; Add screenshots by uploading images to a <code>screenshots/</code> folder
-</footer>
-
-<!-- ═══ LIGHTBOX ═══ -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox">&times;</button>
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
   <img id="lightbox-img" src="" alt="Screenshot enlarged" />
-  <div class="lightbox-caption" id="lightbox-caption"></div>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-  /* ── Lightbox ── */
-  function openImg(el, caption) {
-    document.getElementById('lightbox-img').src = el.src;
-    document.getElementById('lightbox-caption').textContent = caption || '';
-    document.getElementById('lightbox').classList.add('open');
-  }
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+const COLORS = ['#4f46e5','#0891b2','#059669','#d97706','#dc2626','#7c3aed','#db2777','#0f766e'];
 
-  /* ── Scroll progress bar ── */
-  window.addEventListener('scroll', () => {
-    const doc = document.documentElement;
-    const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
-    document.getElementById('progress').style.width = Math.round(pct) + '%';
+let apps = [
+  { id: uid(), name: 'Orchestra', steps: [{ id: uid(), text: '', images: [] }, { id: uid(), text: '', images: [] }, { id: uid(), text: '', images: [] }] },
+  { id: uid(), name: 'KYOV',      steps: [{ id: uid(), text: '', images: [] }, { id: uid(), text: '', images: [] }, { id: uid(), text: '', images: [] }] }
+];
+
+function uid() { return '_' + Math.random().toString(36).slice(2, 9); }
+function color(i) { return COLORS[i % COLORS.length]; }
+function initials(n) { return (n || '?').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase() || '?'; }
+function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ── Render all ── */
+function render() { renderNav(); renderMain(); }
+
+function renderNav() {
+  document.getElementById('nav-bar').innerHTML = apps.map((a, i) =>
+    `<a href="#${a.id}" style="color:${color(i)};border-color:${color(i)}">${a.name || 'App '+(i+1)}</a>`
+  ).join('');
+}
+
+function renderMain() {
+  document.getElementById('main-content').innerHTML = apps.map((a, i) => renderApp(a, i)).join('');
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.app-section').forEach(el => secObs.observe(el));
+    document.querySelectorAll('.steps-wrap').forEach(el => stepObs.observe(el));
   });
+}
 
-  /* ── Animate sections & steps on scroll ── */
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08 });
+function renderApp(app, ai) {
+  const c = color(ai);
+  return `
+  <section class="app-section" id="${app.id}">
+    <div class="app-header" style="background:${c}">
+      <div class="app-icon" id="ic-${app.id}">${initials(app.name)}</div>
+      <input class="app-title-input" placeholder="Application name…" value="${esc(app.name)}"
+        oninput="onAppName('${app.id}',this.value)" aria-label="Application name" />
+      <div class="app-meta" id="meta-${app.id}">${app.steps.length} step${app.steps.length!==1?'s':''}</div>
+      <button class="app-action-btn danger" onclick="removeApp('${app.id}')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+        Remove
+      </button>
+    </div>
+    <div class="steps-wrap" id="sw-${app.id}">
+      ${renderSteps(app, ai)}
+    </div>
+  </section>`;
+}
 
-  document.querySelectorAll('.app-section').forEach(el => observer.observe(el));
+function renderSteps(app, ai) {
+  const c = color(ai);
+  return app.steps.map((s, si) => `
+  <div class="step-card" id="${s.id}">
+    <div class="step-left">
+      <div class="step-num" style="background:${c}">${si+1}</div>
+      ${si < app.steps.length-1 ? '<div class="step-line"></div>' : ''}
+    </div>
+    <div class="step-body">
+      <div class="step-label" style="color:${c}">Step ${si+1}</div>
+      <div class="step-text" contenteditable="true"
+        data-app="${app.id}" data-step="${s.id}"
+        data-placeholder="Click here to type the step description…"
+        oninput="saveText('${app.id}','${s.id}',this)"
+      >${s.text ? esc(s.text) : ''}</div>
+      <div class="screenshots" id="imgs-${s.id}">
+        ${s.images.map((img, ii) => `
+          <div class="screenshot-wrap" onclick="openImg('${img.data}')">
+            <img src="${img.data}" alt="Screenshot" />
+            <div class="zoom-hint">🔍 Enlarge</div>
+            <button class="remove-img-btn" onclick="event.stopPropagation();removeImg('${app.id}','${s.id}',${ii})">&times;</button>
+          </div>`).join('')}
+        ${s.images.length === 0 ? `
+          <div class="screenshot-placeholder">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            No screenshot yet
+          </div>` : ''}
+      </div>
+      <label class="upload-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Upload screenshot
+        <input type="file" accept="image/*" multiple onchange="handleUpload(event,'${app.id}','${s.id}')" />
+      </label>
+    </div>
+    <div class="step-actions">
+      <button class="step-btn delete" onclick="removeStep('${app.id}','${s.id}')" title="Delete step">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+      </button>
+    </div>
+  </div>`).join('') + `
+  <button class="add-step-btn" onclick="addStep('${app.id}')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+    Add step
+  </button>`;
+}
 
-  /* Stagger step cards inside each section */
-  const stepObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const cards = e.target.querySelectorAll('.step-card');
-        cards.forEach((card, i) => {
-          setTimeout(() => card.classList.add('visible'), i * 110);
-        });
-        stepObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.05 });
+/* ── Mutations ── */
+function onAppName(appId, val) {
+  const app = apps.find(a => a.id === appId);
+  if (!app) return;
+  app.name = val;
+  const ic = document.getElementById('ic-'+appId);
+  if (ic) ic.textContent = initials(val);
+  renderNav();
+}
 
-  document.querySelectorAll('.steps-wrap').forEach(el => stepObs.observe(el));
+function saveText(appId, stepId, el) {
+  const app = apps.find(a => a.id === appId);
+  if (!app) return;
+  const step = app.steps.find(s => s.id === stepId);
+  if (step) step.text = el.innerText.trim();
+}
+
+function syncAllText() {
+  document.querySelectorAll('.step-text[data-app]').forEach(el => {
+    const app = apps.find(a => a.id === el.dataset.app);
+    if (!app) return;
+    const step = app.steps.find(s => s.id === el.dataset.step);
+    if (step) step.text = el.innerText.trim();
+  });
+}
+
+function refreshSteps(appId) {
+  syncAllText();
+  const app = apps.find(a => a.id === appId);
+  if (!app) return;
+  const ai = apps.indexOf(app);
+  const sw = document.getElementById('sw-'+appId);
+  if (sw) { sw.innerHTML = renderSteps(app, ai); requestAnimationFrame(() => stepObs.observe(sw)); }
+  const meta = document.getElementById('meta-'+appId);
+  if (meta) meta.textContent = app.steps.length + ' step' + (app.steps.length!==1?'s':'');
+}
+
+function addApp() {
+  apps.push({ id: uid(), name: '', steps: [{ id: uid(), text: '', images: [] }] });
+  render();
+  setTimeout(() => {
+    const secs = document.querySelectorAll('.app-section');
+    if (secs.length) secs[secs.length-1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+function removeApp(appId) {
+  if (apps.length === 1) { showToast('⚠️ Keep at least one application'); return; }
+  if (!confirm('Remove this application and all its steps?')) return;
+  apps = apps.filter(a => a.id !== appId);
+  render();
+}
+
+function addStep(appId) {
+  syncAllText();
+  const app = apps.find(a => a.id === appId);
+  if (!app) return;
+  const newStep = { id: uid(), text: '', images: [] };
+  app.steps.push(newStep);
+  refreshSteps(appId);
+  setTimeout(() => {
+    const el = document.getElementById(newStep.id);
+    if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); el.querySelector('.step-text').focus(); }
+  }, 80);
+}
+
+function removeStep(appId, stepId) {
+  const app = apps.find(a => a.id === appId);
+  if (!app) return;
+  if (app.steps.length === 1) { showToast('⚠️ Keep at least one step'); return; }
+  syncAllText();
+  app.steps = app.steps.filter(s => s.id !== stepId);
+  refreshSteps(appId);
+}
+
+function handleUpload(e, appId, stepId) {
+  syncAllText();
+  const app = apps.find(a => a.id === appId);
+  const step = app && app.steps.find(s => s.id === stepId);
+  if (!step) return;
+  const files = Array.from(e.target.files);
+  let done = 0;
+  files.forEach(f => {
+    const r = new FileReader();
+    r.onload = ev => {
+      step.images.push({ data: ev.target.result, name: f.name });
+      if (++done === files.length) refreshSteps(appId);
+    };
+    r.readAsDataURL(f);
+  });
+}
+
+function removeImg(appId, stepId, idx) {
+  syncAllText();
+  const app = apps.find(a => a.id === appId);
+  const step = app && app.steps.find(s => s.id === stepId);
+  if (!step) return;
+  step.images.splice(idx, 1);
+  refreshSteps(appId);
+}
+
+/* ── Lightbox ── */
+function openImg(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+/* ── Toast ── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ── Export ── */
+function exportHTML() {
+  syncAllText();
+  const navLinks = apps.map((a, i) => {
+    const c = COLORS[i % COLORS.length];
+    return `<a href="#${a.id}" style="color:${c};border-color:${c}">${esc(a.name || 'App '+(i+1))}</a>`;
+  }).join('');
+
+  const appsHTML = apps.map((app, ai) => {
+    const c = COLORS[ai % COLORS.length];
+    const stepsHTML = app.steps.map((s, si) => {
+      const imgs = s.images.map(img => `
+        <div class="screenshot-wrap" onclick="openImg('${img.data}')">
+          <img src="${img.data}" alt="Step ${si+1} screenshot" />
+          <div class="zoom-hint">🔍 Enlarge</div>
+        </div>`).join('');
+      const ph = s.images.length === 0 ? `
+        <div class="screenshot-placeholder">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Screenshot coming soon
+        </div>` : '';
+      return `
+      <div class="step-card">
+        <div class="step-left">
+          <div class="step-num" style="background:${c}">${si+1}</div>
+          ${si < app.steps.length-1 ? '<div class="step-line"></div>' : ''}
+        </div>
+        <div class="step-body">
+          <div class="step-label" style="color:${c}">Step ${si+1}</div>
+          <div class="step-text">${s.text || '<em style="color:#9ca3af">No description yet</em>'}</div>
+          <div class="screenshots">${imgs}${ph}</div>
+        </div>
+      </div>`;
+    }).join('');
+    return `
+    <section class="app-section" id="${app.id}">
+      <div class="app-header" style="background:${c}">
+        <div class="app-icon">${initials(app.name)}</div>
+        <div class="app-title">${esc(app.name || 'Untitled')}</div>
+        <div class="app-meta">${app.steps.length} step${app.steps.length!==1?'s':''}</div>
+      </div>
+      <div class="steps-wrap">${stepsHTML}</div>
+    </section>`;
+  }).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Business Process Training Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f0f2f8;--surface:#fff;--surface2:#f7f8fb;--text:#12131a;--muted:#6b7280;--border:#e4e6ef}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#4f46e5,#0891b2);width:0%;z-index:300;transition:width .1s}
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;padding:0 2rem}
+.header-inner{max-width:1000px;margin:0 auto;height:60px;display:flex;align-items:center;gap:1rem}
+.logo{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:8px}
+.logo-dot{width:10px;height:10px;background:#4f46e5;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.nav a{font-size:12px;font-weight:500;padding:5px 14px;border-radius:20px;text-decoration:none;border:1.5px solid;transition:all .2s;white-space:nowrap}
+.nav a:hover{color:#fff!important}
+.hero{text-align:center;padding:3.5rem 1.5rem 2.5rem;max-width:700px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:1.25rem;letter-spacing:.04em;text-transform:uppercase}
+.hero h1{font-family:'Sora',sans-serif;font-size:clamp(1.8rem,4vw,2.4rem);font-weight:700;line-height:1.2;margin-bottom:.75rem}
+.hero p{font-size:1rem;color:var(--muted);line-height:1.7}
+main{max-width:1000px;margin:0 auto;padding:0 1.5rem 4rem}
+.app-section{margin-bottom:3rem;opacity:0;transform:translateY(28px);transition:opacity .6s,transform .6s}
+.app-section.visible{opacity:1;transform:none}
+.app-header{display:flex;align-items:center;gap:12px;padding:1.1rem 1.5rem;border-radius:16px 16px 0 0;color:#fff;position:relative;overflow:hidden}
+.app-header::after{content:'';position:absolute;right:-20px;top:-20px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+.app-icon{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;flex-shrink:0}
+.app-title{font-family:'Sora',sans-serif;font-size:1.15rem;font-weight:700;flex:1}
+.app-meta{font-size:12px;background:rgba(255,255,255,.18);border-radius:12px;padding:3px 12px}
+.steps-wrap{background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 16px 16px;padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:1px}
+.step-card{display:flex;gap:14px;padding:1rem;border-radius:12px;opacity:0;transform:translateX(-18px);transition:opacity .5s,transform .5s,background .2s;position:relative}
+.step-card.visible{opacity:1;transform:none}
+.step-card:hover{background:var(--surface2)}
+.step-card:not(:last-child)::after{content:'';position:absolute;bottom:0;left:46px;right:0;height:1px;background:var(--border)}
+.step-left{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;width:32px}
+.step-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.step-line{flex:1;width:2px;background:var(--border);border-radius:2px;min-height:16px}
+.step-body{flex:1;min-width:0;padding-top:3px}
+.step-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.step-text{font-size:14px;line-height:1.7;color:var(--text)}
+.screenshots{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;align-items:flex-start}
+.screenshot-wrap{border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:zoom-in;transition:transform .2s,box-shadow .2s;display:inline-block;position:relative;flex-shrink:0}
+.screenshot-wrap:hover{transform:scale(1.03);box-shadow:0 4px 20px rgba(0,0,0,.13)}
+.screenshot-wrap:hover .zoom-hint{opacity:1}
+.zoom-hint{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:10px;text-align:center;padding:4px;opacity:0;transition:opacity .2s;pointer-events:none}
+.screenshot-wrap img{display:block;max-width:260px;max-height:170px;object-fit:cover;pointer-events:none}
+.screenshot-placeholder{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:180px;height:100px;border:2px dashed var(--border);border-radius:8px;background:var(--surface2);color:var(--muted);font-size:11px;margin-top:10px}
+.screenshot-placeholder svg{opacity:.35}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:999;align-items:center;justify-content:center;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:90vh;border-radius:10px;animation:zoomIn .2s ease}
+@keyframes zoomIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.lightbox-close{position:fixed;top:1.25rem;right:1.5rem;color:rgba(255,255,255,.7);font-size:2rem;cursor:pointer;background:none;border:none;line-height:1}
+.lightbox-close:hover{color:#fff}
+footer{text-align:center;padding:2rem 1.5rem;color:var(--muted);font-size:13px;border-top:1px solid var(--border);background:var(--surface)}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<header><div class="header-inner">
+  <div class="logo"><div class="logo-dot"></div>Process Training</div>
+  <nav class="nav" aria-label="Applications">${navLinks}</nav>
+</div></header>
+<div class="hero">
+  <div class="hero-badge"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#4f46e5"/></svg>Business Process Training</div>
+  <h1>Step-by-step application guides</h1>
+  <p>Follow each application's process steps in order. Click any screenshot to expand it.</p>
+</div>
+<main>${appsHTML}</main>
+<footer>Business Process Training Guide</footer>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="Screenshot"/>
+</div>
+<script>
+function openImg(src){document.getElementById('lightbox-img').src=src;document.getElementById('lightbox').classList.add('open')}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=Math.round(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const o=new IntersectionObserver(en=>en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.08});
+document.querySelectorAll('.app-section').forEach(el=>o.observe(el));
+const o2=new IntersectionObserver(en=>en.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.step-card').forEach((c,i)=>setTimeout(()=>c.classList.add('visible'),i*110));o2.unobserve(e.target)}}),{threshold:.05});
+document.querySelectorAll('.steps-wrap').forEach(el=>o2.observe(el));
+<\/script>
+</body></html>`;
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'index.html';
+  a.click();
+  showToast('✅ index.html downloaded — upload to GitHub to update your page!');
+}
+
+/* ── Scroll observers ── */
+const secObs = new IntersectionObserver(en => en.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('visible'); secObs.unobserve(e.target); }
+}), { threshold: .08 });
+
+const stepObs = new IntersectionObserver(en => en.forEach(e => {
+  if (e.isIntersecting) {
+    e.target.querySelectorAll('.step-card').forEach((c, i) => setTimeout(() => c.classList.add('visible'), i * 110));
+    stepObs.unobserve(e.target);
+  }
+}), { threshold: .05 });
+
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('progress').style.width = Math.round(d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+});
+
+render();
 </script>
 </body>
 </html>

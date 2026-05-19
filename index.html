@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Business Process Training Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ─── Reset & Base ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:       #f0f2f8;
+    --surface:  #ffffff;
+    --surface2: #f7f8fb;
+    --text:     #12131a;
+    --muted:    #6b7280;
+    --border:   #e4e6ef;
+    --app1:     #4f46e5;
+    --app2:     #0891b2;
+    --app3:     #059669;
+    --app4:     #d97706;
+    --app5:     #dc2626;
+    --app6:     #7c3aed;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── Header ─── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    padding: 0 2rem;
+  }
+  .header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .logo-dot {
+    width: 10px; height: 10px;
+    background: var(--app1);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+  .nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-left: auto;
+    align-items: center;
+  }
+  .nav a {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    border: 1.5px solid;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav a:hover { color: #fff; }
+
+  /* ─── Hero ─── */
+  .hero {
+    text-align: center;
+    padding: 4rem 1.5rem 3rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.7s 0.1s forwards;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+  .hero p {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ─── Progress bar ─── */
+  .progress-bar {
+    position: fixed;
+    top: 60px; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--app1), var(--app2));
+    width: 0%;
+    transition: width 0.1s;
+    z-index: 199;
+  }
+
+  /* ─── Main layout ─── */
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+
+  /* ─── App section ─── */
+  .app-section {
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .app-section.visible { opacity: 1; transform: none; }
+
+  .app-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 1.25rem 1.75rem;
+    border-radius: 16px 16px 0 0;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .app-header::after {
+    content: '';
+    position: absolute;
+    right: -20px; top: -20px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  .app-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .app-title { font-family: 'Sora', sans-serif; font-size: 1.2rem; font-weight: 700; flex: 1; }
+  .app-meta { font-size: 12px; background: rgba(255,255,255,0.2); border-radius: 12px; padding: 3px 12px; }
+
+  /* ─── Steps container ─── */
+  .steps-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  /* ─── Step card ─── */
+  .step-card {
+    display: flex;
+    gap: 16px;
+    padding: 1.1rem 1rem;
+    border-radius: 12px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, background 0.2s;
+    position: relative;
+  }
+  .step-card.visible { opacity: 1; transform: none; }
+  .step-card:hover { background: var(--surface2); }
+  .step-card:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 48px; right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .step-line {
+    flex: 1;
+    width: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    min-height: 16px;
+  }
+
+  .step-body { flex: 1; min-width: 0; padding-top: 4px; }
+  .step-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .step-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  /* placeholder text styling */
+  .step-text.placeholder { color: var(--muted); font-style: italic; }
+
+  /* ─── Screenshots ─── */
+  .screenshots {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .screenshot-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .screenshot-wrap:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+  .screenshot-wrap img {
+    display: block;
+    max-width: 240px;
+    max-height: 160px;
+    object-fit: cover;
+  }
+  /* placeholder screenshot slot */
+  .screenshot-placeholder {
+    width: 200px; height: 120px;
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 12px;
+    background: var(--surface2);
+  }
+  .screenshot-placeholder svg { opacity: 0.4; }
+
+  /* ─── Lightbox ─── */
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 92vw;
+    max-height: 92vh;
+    border-radius: 10px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    animation: zoomIn 0.2s ease;
+  }
+  @keyframes zoomIn { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
+  .lightbox-close {
+    position: fixed; top: 1.25rem; right: 1.5rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 2rem;
+    cursor: pointer;
+    background: none; border: none;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: #fff; }
+  .lightbox-caption {
+    position: fixed; bottom: 1.5rem; left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    background: rgba(0,0,0,0.5);
+    padding: 5px 16px;
+    border-radius: 20px;
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  /* ─── Animations ─── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 600px) {
+    .header-inner { padding: 0; }
+    header { padding: 0 1rem; }
+    main { padding: 0 1rem 3rem; }
+    .app-header { padding: 1rem; }
+    .steps-wrap { padding: 1rem; }
+    .hero { padding: 2.5rem 1rem 2rem; }
+    .nav a { font-size: 11px; padding: 4px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ PROGRESS BAR ═══ -->
+<div class="progress-bar" id="progress"></div>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      Process Training
+    </div>
+    <nav class="nav" aria-label="Jump to application">
+      <!-- ── ADD/REMOVE NAV LINKS HERE AS YOU ADD MORE APPS ── -->
+      <a href="#app-1" style="color:var(--app1);border-color:var(--app1)">Orchestra</a>
+      <a href="#app-2" style="color:var(--app2);border-color:var(--app2)">KYOV</a>
+      <!-- <a href="#app-3" style="color:var(--app3);border-color:var(--app3)">App 3</a> -->
+    </nav>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-badge">
+    <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="var(--app1)"/></svg>
+    Business Process Training
+  </div>
+  <h1>Step-by-step application guides</h1>
+  <p>Follow each application's process steps in order. Click any screenshot to expand it.</p>
+</div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main>
+
+  <!-- ════════════════════════════════════════════
+       APP 1: ORCHESTRA
+       To edit: update the steps below.
+       To add a screenshot: put image files in a
+       "screenshots" folder next to this file, then
+       replace the placeholder div with:
+         <div class="screenshot-wrap">
+           <img src="screenshots/YOUR-FILE.png" alt="Step description" onclick="openImg(this,'Caption text')" />
+         </div>
+  ════════════════════════════════════════════ -->
+  <section class="app-section" id="app-1">
+    <div class="app-header" style="background:var(--app1)">
+      <div class="app-icon">OR</div>
+      <div class="app-title">Orchestra</div>
+      <div class="app-meta">X steps</div>  <!-- update X with actual count -->
+    </div>
+    <div class="steps-wrap">
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-left">
+          <div class="step-num" style="background:var(--app1)">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-label" style="color:var(--app1)">Step 1</div>
+          <div class="step-text">
+            <!-- ✏️ REPLACE THIS TEXT with your step description -->
+            Describe what the trainee should do in step 1 here.
+          </div>
+          <!-- 🖼️ SCREENSHOT: replace placeholder below with actual image tag when ready -->
+          <div class="screenshot-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            Screenshot coming soon
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-left">
+          <div class="step-num" style="background:var(--app1)">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-label" style="color:var(--app1)">Step 2</div>
+          <div class="step-text">
+            Describe what the trainee should do in step 2 here.
+          </div>
+          <div class="screenshot-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            Screenshot coming soon
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-left">
+          <div class="step-num" style="background:var(--app1)">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-label" style="color:var(--app1)">Step 3</div>
+          <div class="step-text">
+            Describe what the trainee should do in step 3 here.
+          </div>
+          <div class="screenshot-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            Screenshot coming soon
+          </div>
+        </div>
+      </div>
+
+      <!-- ➕ COPY A STEP BLOCK ABOVE TO ADD MORE STEPS -->
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       APP 2: KYOV
+       Same structure as above — edit steps below.
+  ════════════════════════════════════════════ -->
+  <section class="app-section" id="app-2">
+    <div class="app-header" style="background:var(--app2)">
+      <div class="app-icon">KY</div>
+      <div class="app-title">KYOV</div>
+      <div class="app-meta">X steps</div>
+    </div>
+    <div class="steps-wrap">
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-left">
+          <div class="step-num" style="background:var(--app2)">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-label" style="color:var(--app2)">Step 1</div>
+          <div class="step-text">
+            Describe what the trainee should do in step 1 here.
+          </div>
+          <div class="screenshot-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            Screenshot coming soon
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-left">
+          <div class="step-num" style="background:var(--app2)">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-label" style="color:var(--app2)">Step 2</div>
+          <div class="step-text">
+            Describe what the trainee should do in step 2 here.
+          </div>
+          <div class="screenshot-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            Screenshot coming soon
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-left">
+          <div class="step-num" style="background:var(--app2)">3</div>
+        </div>
+        <div class="step-body">
+          <div class="step-label" style="color:var(--app2)">Step 3</div>
+          <div class="step-text">
+            Describe what the trainee should do in step 3 here.
+          </div>
+          <div class="screenshot-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            Screenshot coming soon
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       ➕ ADD MORE APPLICATIONS
+       Copy the block below, paste after app-2,
+       change id="app-3", color to var(--app3),
+       update initials, name, and steps.
+  ════════════════════════════════════════════
+
+  <section class="app-section" id="app-3">
+    <div class="app-header" style="background:var(--app3)">
+      <div class="app-icon">A3</div>
+      <div class="app-title">App Name</div>
+      <div class="app-meta">X steps</div>
+    </div>
+    <div class="steps-wrap">
+      <div class="step-card">
+        <div class="step-left">
+          <div class="step-num" style="background:var(--app3)">1</div>
+        </div>
+        <div class="step-body">
+          <div class="step-label" style="color:var(--app3)">Step 1</div>
+          <div class="step-text">Step description here.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  -->
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  Business Process Training Guide &nbsp;·&nbsp; Add screenshots by uploading images to a <code>screenshots/</code> folder
+</footer>
+
+<!-- ═══ LIGHTBOX ═══ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox">&times;</button>
+  <img id="lightbox-img" src="" alt="Screenshot enlarged" />
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<script>
+  /* ── Lightbox ── */
+  function openImg(el, caption) {
+    document.getElementById('lightbox-img').src = el.src;
+    document.getElementById('lightbox-caption').textContent = caption || '';
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  /* ── Scroll progress bar ── */
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+    document.getElementById('progress').style.width = Math.round(pct) + '%';
+  });
+
+  /* ── Animate sections & steps on scroll ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.app-section').forEach(el => observer.observe(el));
+
+  /* Stagger step cards inside each section */
+  const stepObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const cards = e.target.querySelectorAll('.step-card');
+        cards.forEach((card, i) => {
+          setTimeout(() => card.classList.add('visible'), i * 110);
+        });
+        stepObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.steps-wrap').forEach(el => stepObs.observe(el));
+</script>
+</body>
+</html>
